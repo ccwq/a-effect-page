@@ -23,7 +23,7 @@
     </div>
     <script>
       var loader = assetsLoader()
-          .add("./images/back-man-head.png")
+          .add("./images/back-man-head.jpg")
           .on("error", function (error) {
               console.error(error);
           })
@@ -43,7 +43,7 @@
           let _ll = $(".layer-left"), _lr = $(".layer-right"), _bg = $(".layer-right-bg");
           var line = new TimelineMax({});
       
-          line.add(TweenMax.to(".loading", 0.8, {alpha: 0, x: "-31%", ease:Expo.easeIn}))
+          line.add(TweenMax.to(".loading", 0.8, {alpha: 0, width: "180%", ease:Expo.easeIn}))
           line.add(function () {
               $(".loading").remove();
           })
