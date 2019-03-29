@@ -1,0 +1,72 @@
+
+<html>
+  <head>
+    <link rel="stylesheet" href="./styles/common.css"/>
+    <script src="//cdn.bootcss.com/gsap/latest/TweenMax.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./libs/assets-loader.js"></script>
+  </head>
+  <body>
+    <div class="loading"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+    <div class="root">
+      <div class="layer-left"></div>
+      <div class="layer-right">
+        <div class="layer-right-bg"></div>
+        <div class="main-container">
+          <div class="logo-sysnname"></div>
+          <div class="row">
+            <div class="tx1"> 量身匠造 合作共赢</div>
+            <div class="tx2"> 汇文化大德 集创新智慧 <br> 诚信为本 庄严文化</div><a class="main-button">点击了解</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var loader = assetsLoader()
+          .add("./images/back-man-head.png")
+          .on("error", function (error) {
+              console.error(error);
+          })
+          .on("progress", function (progress) {
+              console.log((progress * 100).toFixed() + '%');
+          })
+          .on("complete", function (assets) {
+              setTimeout(start, 0)
+          })
+          .start()
+      ;
+      
+      function start() {
+          let initValue = 50;
+          let initValue2 = initValue / 2;
+          let _tg = {value: initValue}
+          let _ll = $(".layer-left"), _lr = $(".layer-right"), _bg = $(".layer-right-bg");
+          var line = new TimelineMax({});
+      
+          line.add(TweenMax.to(".loading", 0.8, {alpha: 0, x: "-31%", ease:Expo.easeIn}))
+          line.add(function () {
+              $(".loading").remove();
+          })
+          line.add(
+              TweenMax.from(_tg, 2.1, {
+                  value: 0,
+                  ease: Power4.easeInOut,
+                  onUpdate() {
+                      _ll.css({width: `${100 - _tg.value}%`})
+                      _lr.css({width: `${_tg.value}%`})
+                      TweenMax.set(_bg, {
+                          rotation: `${-25 * (_tg.value - initValue2) / initValue2}deg`
+                      })
+                  }
+              }),
+              "-=1.3"
+          )
+          line.add(TweenMax.from(".logo-sysnname", 0.8, {alpha: 0, y: "-100%"}), "-=0.9")
+          line.add(TweenMax.from(".tx1", 0.8, {alpha: 0, y: "100%"}), "-=0.4")
+          line.add(TweenMax.from(".tx2", 0.8, {alpha: 0, y: "100%"}), "-=0.4")
+          line.add(TweenMax.from(".main-button", 0.8, {alpha: 0, y: "100%"}), "-=0.4");
+          return line;
+      }
+    </script>
+  </body>
+</html>
